@@ -25,6 +25,7 @@
  	`gcc hello.s -o hello.native`
 - Execute the native code program:
 	`./hello.native`
+	
 ### How do we write a compiler pass with LLVM?
 ### Write a simple compiler pass to replace calls to printf with my_printf in LLVM.
 ### How do we use LLVM to emit the LLVM IR (-emit-llvm)?
