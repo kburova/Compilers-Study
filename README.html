@@ -1018,6 +1018,7 @@ body .markdown-body
 <div class="toc">
 <ul>
 <li><a href="#compilers-independent-study">Compilers Independent Study</a><ul>
+<li><a href="#good-resources">Good resources</a></li>
 <li><a href="#questions-to-be-answered">Questions to be answered</a><ul>
 <li><a href="#how-do-we-build-and-run-llvm">How do we build and run LLVM?</a></li>
 <li><a href="#how-do-we-compile-programs-with-llvm">How do we compile programs with LLVM?</a></li>
@@ -1032,36 +1033,116 @@ body .markdown-body
 </li>
 </ul>
 </div>
+<h2 id="good-resources"><a name="user-content-good-resources" href="#good-resources" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Good resources</h2>
+<ul>
+<li><a href="http://www.aosabook.org/en/llvm.html">LLVM by Chris Lattner</a></li>
+</ul>
 <h2 id="questions-to-be-answered"><a name="user-content-questions-to-be-answered" href="#questions-to-be-answered" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Questions to be answered</h2>
 <h3 id="how-do-we-build-and-run-llvm"><a name="user-content-how-do-we-build-and-run-llvm" href="#how-do-we-build-and-run-llvm" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>How do we build and run LLVM?</h3>
 <ul>
 <li><a href="https://llvm.org/docs/GettingStarted.html">How to get started</a> link contains a list of source directories that have to be checked out prior building LLVM.</li>
 <li>LLVM uses Cmake to build the project</li>
-<li>MacOSX has LLVM/Clang installed by default</li>
+<li>LLVM is installed on Tesla/Hydra machines</li>
+<li>There is a problem with CMake on Yosemite OSX</li>
+<li>Installs on Sierra OSX</li>
 </ul>
 <h3 id="how-do-we-compile-programs-with-llvm"><a name="user-content-how-do-we-compile-programs-with-llvm" href="#how-do-we-compile-programs-with-llvm" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>How do we compile programs with LLVM?</h3>
-<ul>
-<li>Compile the C file into a native executable:<br />
-<code>clang hello.c -o hello</code></li>
-<li>Compile the C file into an LLVM bitcode file:<br />
-<code>clang -O3 -emit-llvm hello.c -c -o hello.bc</code></li>
-<li>Run the program in both forms. To run the program, use:<br />
+<p>This example is also taken form <a href="https://llvm.org/docs/GettingStarted.html">How to get started</a> <br />
+- Compile the C file into a native executable:<br />
+<code>clang hello.c -o hello</code><br />
+- Compile the C file into an LLVM bitcode file:<br />
+<code>clang -O3 -emit-llvm hello.c -c -o hello.bc</code><br />
+- Run the program in both forms. To run the program, use:<br />
 <code>./hello</code><br />
   and<br />
-<code>lli hello.bc</code></li>
-<li>Use the llvm-dis utility to take a look at the LLVM assembly code:<br />
-<code>llvm-dis &lt; hello.bc | less</code></li>
-<li>Compile the program to native assembly using the LLC code generator:<br />
-<code>llc hello.bc -o hello.s</code> </li>
-<li>Assemble the native assembly language file into a program:<br />
-<code>gcc hello.s -o hello.native</code></li>
-<li>Execute the native code program:<br />
-<code>./hello.native</code></li>
-</ul>
+<code>lli hello.bc</code><br />
+- Use the llvm-dis utility to take a look at the LLVM assembly code:<br />
+<code>llvm-dis &lt; hello.bc | less</code><br />
+- Compile the program to native assembly using the LLC code generator:<br />
+<code>llc hello.bc -o hello.s</code> <br />
+- Assemble the native assembly language file into a program:<br />
+<code>gcc hello.s -o hello.native</code><br />
+- Execute the native code program:<br />
+<code>./hello.native</code></p>
 <h3 id="how-do-we-write-a-compiler-pass-with-llvm"><a name="user-content-how-do-we-write-a-compiler-pass-with-llvm" href="#how-do-we-write-a-compiler-pass-with-llvm" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>How do we write a compiler pass with LLVM?</h3>
+<p><a href="http://llvm.org/docs/WritingAnLLVMPass.html">Writing LLVM Pass</a> link is available.</p>
+<p>All LLVM passes are subclasses of the Pass class, which implement functionality by overriding virtual methods inherited from Pass. Depending on how your pass works, you should inherit from the ModulePass , CallGraphSCCPass, FunctionPass , or LoopPass, or RegionPass, or BasicBlockPass classes, which gives the system more information about what your pass does, and how it can be combined with other passes.</p>
 <h3 id="write-a-simple-compiler-pass-to-replace-calls-to-printf-with-my_printf-in-llvm"><a name="user-content-write-a-simple-compiler-pass-to-replace-calls-to-printf-with-my_printf-in-llvm" href="#write-a-simple-compiler-pass-to-replace-calls-to-printf-with-my_printf-in-llvm" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Write a simple compiler pass to replace calls to printf with my_printf in LLVM.</h3>
+<p>Had no oportunity due to problems with installation.</p>
 <h3 id="how-do-we-use-llvm-to-emit-the-llvm-ir-emit-llvm"><a name="user-content-how-do-we-use-llvm-to-emit-the-llvm-ir-emit-llvm" href="#how-do-we-use-llvm-to-emit-the-llvm-ir-emit-llvm" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>How do we use LLVM to emit the LLVM IR (-emit-llvm)?</h3>
+<pre><code>`clang -O3 -emit-llvm hello.c -c -o hello.bc`
+</code></pre>
 <h3 id="what-other-options-for-printing-intermediate-code-does-llvm-come-with"><a name="user-content-what-other-options-for-printing-intermediate-code-does-llvm-come-with" href="#what-other-options-for-printing-intermediate-code-does-llvm-come-with" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>What other options for printing intermediate code does LLVM come with?</h3>
+<p>LLVM forms of IR: </p>
+<ol>
+<li>
+<p>A human-readable assembly format (.ll)<br />
+<pre><code>define i32 @add1(i32 %a, i32 %b) {
+entry:
+    %tmp1 = add i32 %a, %b
+    ret i32 %tmp1
+}
+
+define i32 @add2(i32 %a, i32 %b) {
+entry:
+    %tmp1 = icmp eq i32 %a, 0
+    br i1 %tmp1, label %done, label %recurse
+
+recurse:
+    %tmp2 = sub i32 %a, 1
+    %tmp3 = add i32 %b, 1
+    %tmp4 = call i32 @add2(i32 %tmp2, i32 %tmp3)
+    ret i32 %tmp4
+
+done:
+    ret i32 %b
+}
+</code></pre></p>
+<p>That corresponds to:<br />
+<pre><code>unsigned add1(unsigned a, unsigned b) {
+  return a+b;
+}
+
+// Perhaps not the most efficient way to add two numbers.
+unsigned add2(unsigned a, unsigned b) {
+  if (a == 0) return b;
+  return add2(a-1, b+1);
+}
+</code></pre><br />
+ 2. A C++ object format suitable for frontends <br />
+ 3. A dense bitcode format for serializing (.bc) <br />
+<pre><code> ; ModuleID = '&lt;stdin&gt;'
+target datalayout = &quot;e-p:64:64:64-i1:8:8-i8:8:8-i16:16:16-i32:32:32-i64:64:64-f32:32:32-f64:64:64-v64:64:64-v128:128:128-a0:0:64-s0:64:64-
+target triple = &quot;x86_64-redhat-linux-gnu&quot;
+
+@str = private unnamed_addr constant [12 x i8] c&quot;hello world\00&quot;
+
+; Function Attrs: nounwind uwtable
+define i32 @main() #0 {
+  %puts = tail call i32 @puts(i8* getelementptr inbounds ([12 x i8]* @str, i64 0, i64 0))
+  ret i32 0
+}
+
+; Function Attrs: nounwind
+declare i32 @puts(i8* nocapture readonly) #1
+
+attributes #0 = { nounwind uwtable &quot;less-precise-fpmad&quot;=&quot;false&quot; &quot;no-frame-pointer-elim&quot;=&quot;false&quot; &quot;no-infs-fp-math&quot;=&quot;false&quot; &quot;no-nans-fp-math
+attributes #1 = { nounwind }
+
+!llvm.ident = !{!0}
+
+!0 = metadata !{metadata !&quot;clang version 3.4.2 (tags/RELEASE_34/dot2-final)&quot;}
+</code></pre><br />
+That corresponds to:<br />
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    printf(&quot;hello world\n&quot;);
+    return 0;
+}
+</code></pre></p>
+</li>
+</ol>
 <h3 id="can-we-use-llvm-to-present-a-stripped-down-compiler-to-students"><a name="user-content-can-we-use-llvm-to-present-a-stripped-down-compiler-to-students" href="#can-we-use-llvm-to-present-a-stripped-down-compiler-to-students" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Can we use LLVM to present a &lsquo;stripped down&rsquo; compiler to students?</h3>
 <ul>
 <li>That is, a compiler that only parses the input program into an abstract syntax tree.</li>
