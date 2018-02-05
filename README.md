@@ -1,12 +1,12 @@
-#Compilers Independent Study
+# Compilers Independent Study
 
 [TOC]
 
-##Good resources
+## Good resources
 
 - [LLVM by Chris Lattner](http://www.aosabook.org/en/llvm.html)
 
-##Questions to be answered
+## Questions to be answered
 
 ### How do we build and run LLVM?
 
